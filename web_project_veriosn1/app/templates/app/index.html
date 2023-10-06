@@ -1,0 +1,30 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<head>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+
+    <main>
+        <section>
+            {% for item in name %}
+            <li>{{ item.fio }}</li>
+            {% endfor %}
+            <h2>Секция 1</h2>
+            <p>Текст в секции 1.</p>
+        </section>
+
+        <section>
+            <h2>Секция 2</h2>
+            <p>Текст в секции 2.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Ваше название. Все права защищены.</p>
+    </footer>
+</body>
+
+{% endblock %}

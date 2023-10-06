@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "web_project_veriosn1", "web_project_veriosn1\web_project_veriosn1.pyproj", "{824A1143-C791-432F-8274-6B30EBDAB411}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{824A1143-C791-432F-8274-6B30EBDAB411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{824A1143-C791-432F-8274-6B30EBDAB411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{824A1143-C791-432F-8274-6B30EBDAB411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{824A1143-C791-432F-8274-6B30EBDAB411}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9CCAF23-B776-457B-A1ED-EE42D56BC616}
+	EndGlobalSection
+EndGlobal
