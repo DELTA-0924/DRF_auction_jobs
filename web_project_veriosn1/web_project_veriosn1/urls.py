@@ -1,18 +1,23 @@
-"""
-Definition of urls for web_project_veriosn1.
-"""
 
-from datetime import datetime
-from django.urls import path
+from django.urls import path,include
 from django.contrib import admin
-from django.contrib.auth.views import LoginView, LogoutView
-from app import forms, views
-from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
+from app.views import *
+from django.urls import path
 
 urlpatterns = [
-    path('home',views.home,name="home"),
-    path('/register',views.register,name='register'),
-    path('login/', views.custom_login, name='login'),
-    path('logout', views.custom_logout, name='logout'),
-    path('admin/', admin.site.urls),
+    path('signup', SignUpView.as_view(), name='signup'),
+    path('signin', SignInView.as_view(), name='signin'),
+
+    path('userlist',UserlistView.as_view(),name='userlist'),
+    path('admin',admin.site.urls)
 ]
+from rest_framework.authtoken import views
+urlpatterns += [
+    path('api-token-auth', views.obtain_auth_token)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

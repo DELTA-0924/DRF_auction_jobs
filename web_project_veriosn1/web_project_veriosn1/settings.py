@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import posixpath
 
+import rest_framework
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +27,7 @@ SECRET_KEY = 'd2c995ba-a732-433c-a537-8a24a17b16d0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = 'app.CustomUser'  # Замените 'myapp' на путь к вашей пользовательской модели
 
 # Application references
@@ -33,17 +35,21 @@ AUTH_USER_MODEL = 'app.CustomUser'  # Замените 'myapp' на путь к вашей пользоват
 INSTALLED_APPS = [
     'app',
     # Add your apps here to enable them
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 # Middleware framework
 # https://docs.djangoproject.com/en/2.1/topics/http/middleware/
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +59,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
+REST_FRAMEWORK={
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.AllowAny'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+       
+    ),
+    }
 
 ROOT_URLCONF = 'web_project_veriosn1.urls'
 
@@ -80,13 +95,11 @@ WSGI_APPLICATION = 'web_project_veriosn1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbtwo',                  # Имя вашей базы данных
+        'NAME': 'internhunter',                  # Имя вашей базы данных
         'USER': 'root',  # Имя пользователя MySQL
         'PASSWORD': 'testserver12345',   # Пароль пользователя MySQL
         'HOST': '127.0.0.1',# Оставьте пустым или укажите хост MySQL
-        'PORT': '3306',                        # Оставьте пустым или укажите порт MySQL
-                'OPTIONS': { 
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
+        'PORT': '3306'
     }
 }
 
@@ -106,7 +119,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+CORS_ORIGIN_ALLOW_ALL=True
+CORS_ALLOW_CREDENTIALS = True
+TOKEN_AUTH = {
+    'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
+}
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 LANGUAGE_CODE = 'en-us'
@@ -121,3 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'  # или другой подходящий тип п
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+#Media filse
+MEDIA_URL = '/media/'  # URL-префикс для медиафайлов
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Абсолютный путь к папке медиафайлов
+
+from datetime import timedelta
