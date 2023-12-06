@@ -8,7 +8,7 @@ from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.utils import timezone
 
-class CustomUser(AbstractUser,PermissionsMixin):   
+class CustomUser(AbstractUser,PermissionsMixin):
     location = models.CharField(max_length=255,null=True, blank=True)
     skills = models.TextField(null=True, blank=True)
     salary = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
@@ -19,11 +19,17 @@ class CustomUser(AbstractUser,PermissionsMixin):
     email = models.EmailField(blank=True)
     accountStatus = models.BooleanField(default=True)
     accountStatus1 = models.BooleanField(default=True)
-    role=models.CharField(max_length=10)
-
+    role=models.CharField(max_length=10,blank=True,null=True)
+    is_session_active = models.BooleanField(default=False)
+    def get_auth_token(self):
+        try:
+                return self.auth_tokens.get()  # Получить токен пользователя
+        except Token.DoesNotExist:
+            return None
     def __str__(self):
         return self.username
-   
+
+    
 class CustomAuction(models.Model):
     auctionId=models.AutoField(primary_key=True)
     titelname=models.CharField(max_length=50)

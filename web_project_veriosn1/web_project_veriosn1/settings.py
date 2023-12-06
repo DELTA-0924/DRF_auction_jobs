@@ -27,8 +27,21 @@ SECRET_KEY = 'd2c995ba-a732-433c-a537-8a24a17b16d0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = 'app.CustomUser'  # Замените 'myapp' на путь к вашей пользовательской модели
+ALLOWED_HOSTS = ["*"]
+CORS_ORIGIN_ALLOW_ALL=True
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # Замените этот URL на свой
+# ]
+CORS_ALLOW_CREDENTIALS = True# нужно для отого что бы можно было передовать учетные данные(куки и заголовки авторизации)
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
@@ -48,8 +61,7 @@ INSTALLED_APPS = [
 
 # Middleware framework
 # https://docs.djangoproject.com/en/2.1/topics/http/middleware/
-MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+MIDDLEWARE = [    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,17 +69,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+  #  'app.middleware.PreventLoginWithActiveSessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',    
 ]
-REST_FRAMEWORK={
-    'DEFAULT_PERMISSION_CLASSES':[
+
+REST_FRAMEWORK = {
+     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 2,
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-       
     ),
-    }
+}
+
+TOKEN_AUTH = {
+    'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
+}
 
 ROOT_URLCONF = 'web_project_veriosn1.urls'
 
@@ -122,11 +141,8 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-CORS_ORIGIN_ALLOW_ALL=True
-CORS_ALLOW_CREDENTIALS = True
-TOKEN_AUTH = {
-    'TOKEN_MODEL': 'rest_framework.authtoken.models.Token',
-}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 LANGUAGE_CODE = 'en-us'
@@ -141,7 +157,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'  # или другой подходящий тип п
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
-#Media filse
+#Media filse+
 MEDIA_URL = '/media/'  # URL-префикс для медиафайлов
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Абсолютный путь к папке медиафайлов
 
