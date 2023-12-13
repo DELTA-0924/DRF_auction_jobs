@@ -3,39 +3,36 @@ from django.urls import path,include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 from app.views import *
-from django.urls import path
+from django.urls import path,re_path
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Your API",
+        default_version='v1',
+        description="API Description",
+        terms_of_service="https://www.example.com/terms/",
+        contact=openapi.Contact(email="contact@example.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+
 urlpatterns = [
-    #registration
-    path('signup', SignUpView.as_view(), name='signup'),
-    path('signup1', EmplSignUpView.as_view(), name='signup'),
-    #login
-    path('signin', SignInView.as_view(), name='signin'),
-    #logout
-    path('signout', SignOutView.as_view(), name='signout'),
-    
-    path("task-create",TaskCreateView.as_view(),name="task-create"),
-    path("auction-create",AuctionCreateView.as_view(),name="auction-create"),
-    
 
-    path("auction-list",AuctionListView.as_view(),name="auction-list"),
-    
-    path("search-student/<int:pk>",UserSearchAPIView.as_view(),name="search"),
-    
-
-
-    
-    #Users details
-    path('userlist',UserlistView.as_view(),name='userlist'),
-    path('profile', UserDetailsView.as_view(), name='profile'),
+    path('api/', include('app.urls')),  
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
     path('admin',admin.site.urls)
 ]
-from rest_framework.authtoken import views
-urlpatterns += [
-    path('get-token', GetUserToken.as_view(),name="get-token")
-]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

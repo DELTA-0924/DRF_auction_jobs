@@ -27,13 +27,13 @@ SECRET_KEY = 'd2c995ba-a732-433c-a537-8a24a17b16d0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-AUTH_USER_MODEL = 'app.CustomUser'  # Замените 'myapp' на путь к вашей пользовательской модели
+AUTH_USER_MODEL = 'app.CustomUser'  # пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 'myapp' пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_ALLOW_ALL=True
 # CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",  # Замените этот URL на свой
+#     "http://localhost:3000",  # пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ URL пїЅпїЅ пїЅпїЅпїЅпїЅ
 # ]
-CORS_ALLOW_CREDENTIALS = True# нужно для отого что бы можно было передовать учетные данные(куки и заголовки авторизации)
+CORS_ALLOW_CREDENTIALS = True# пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
@@ -43,9 +43,15 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
+#ASGI_APPLICATION = 'web_project_veriosn1.asgi.application'
+#WSGI_APPLICATION = 'web_project_veriosn1.wsgi.application'
+
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
 INSTALLED_APPS = [
+    'channels',
+    'drf_yasg',
+    'django_filters',
     'app',
     # Add your apps here to enable them
     'corsheaders',
@@ -73,9 +79,16 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',    
 ]
 
+#CHANNEL_LAYERS = {
+#    "default": {
+#        "BACKEND": "channels_redis.core.RedisChannelLayer",
+#        "CONFIG": {
+#            "hosts": [("127.0.0.1", 6379)],
+#        },
+#    },
+#}
+
 REST_FRAMEWORK = {
-     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 2,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ],
@@ -108,16 +121,15 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'web_project_veriosn1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'internhunter',                  # Имя вашей базы данных
-        'USER': 'root',  # Имя пользователя MySQL
-        'PASSWORD': 'testserver12345',   # Пароль пользователя MySQL
-        'HOST': '127.0.0.1',# Оставьте пустым или укажите хост MySQL
+        'NAME': 'internhunter',                  # пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        'USER': 'root',  # пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MySQL
+        'PASSWORD': 'testserver12345',   # пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MySQL
+        'HOST': '127.0.0.1',# пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ MySQL
         'PORT': '3306'
     }
 }
@@ -151,14 +163,14 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 # settings.py
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'  # или другой подходящий тип поля первичного ключа
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'  # пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 #Media filse+
-MEDIA_URL = '/media/'  # URL-префикс для медиафайлов
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Абсолютный путь к папке медиафайлов
+MEDIA_URL = '/media/'  # URL-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 from datetime import timedelta

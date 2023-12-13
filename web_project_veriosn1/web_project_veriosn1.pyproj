@@ -35,6 +35,9 @@
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\consumers.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\forms.py" />
     <Compile Include="app\middleware.py">
       <SubType>Code</SubType>
@@ -50,10 +53,19 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\tests.py" />
+    <Compile Include="app\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
+    <Compile Include="web_project_veriosn1\asgi.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="manage.py" />
+    <Compile Include="run_daphne.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="web_project_veriosn1\__init__.py" />
     <Compile Include="web_project_veriosn1\settings.py" />
     <Compile Include="web_project_veriosn1\urls.py" />
